@@ -8,6 +8,14 @@ Ext.application({
         'SearchCarView'
     ],
 
+    controllers : [
+        'CarCatalogController'
+    ],
+
+    stores : [
+        'CarCatalogStore'
+    ],
+
     launch: function () {
         Ext.create('Ext.container.Viewport', {
             layout: 'fit',

@@ -8,6 +8,11 @@ Ext.define('CarCatalog.view.SearchCarView', {
             name: 'search',
             fieldLabel: 'Введите название модели',
             maxLength: 200
+        },
+        {
+            xtype: 'button',
+            text: 'Search',
+            action: 'searchFIO'
         }
     ]
 });

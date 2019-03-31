@@ -23,6 +23,12 @@ Ext.define('CarCatalog.view.CarCatalogView', {
             width: 300,
             collapsible: true,
             collapsed: false
+        },
+        {
+            xtype: 'panel',
+            html : '<iframe src="https://www.google.ru/"></iframe>',
+            region: 'south',
+            height: 200
         }
     ],
     renderTo: Ext.getBody()

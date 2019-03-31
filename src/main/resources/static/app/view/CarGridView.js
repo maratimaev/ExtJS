@@ -4,7 +4,7 @@ Ext.define('CarCatalog.view.CarGridView', {
     width: 400,
     height: 300,
     frame: true,
-    // store: 'CarCatalogStore',
+    store: 'CarCatalogStore',
     iconCls: 'icon-user',
     viewConfig:{
         markDirty:false
