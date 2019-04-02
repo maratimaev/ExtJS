@@ -8,20 +8,21 @@ Ext.application({
                 width: 500,
                 height: 360,
                 padding: 10,
-                alias: 'widget.carCatalogView',
                 layout: 'border',
                 items: [{
                         xtype: 'grid',
                         region: 'center',
                         title: 'Пользователи',
-                        id: 'myGrid',
                         store: store,
                         columns: [{
-                            header: 'Имя',
+                            header: 'Фамилия',
                             dataIndex: 'name'
                         }, {
-                            header: 'price',
-                            dataIndex: 'price'
+                            header: 'Имя',
+                            dataIndex: 'surname'
+                        }, {
+                            header: 'Отчество',
+                            dataIndex: 'patronymic'
                         }],
                         listeners: {
                             scope: this,
@@ -32,7 +33,8 @@ Ext.application({
                                             {
                                                 text: 'find', handler: function () {
                                                      var name = record.get('name');
-                                                     alert(name);
+                                                     var url = 'https://www.google.com/search?igu=1&ei=&q=' + name;
+                                                     cmp.update('<iframe src="' + url+ '" style="height:100%;width:100%"></iframe>');
                                                 }
                                             }
                                         ]
@@ -59,7 +61,7 @@ Ext.application({
                                 listeners: {
                                     click: function () {
                                         var text = Ext.ComponentQuery.query('textfield[name=name]')[0].getValue();
-                                        store.proxy.setUrl('/car/' + text);
+                                        store.proxy.setUrl('/user/' + text);
                                         store.load();
                                     },
                                     scope: this
@@ -67,16 +69,7 @@ Ext.application({
                             }
                         ]
                     },
-                    {
-                        xtype: 'component',
-                        title: 'Tab',
-                        flex: 1.5,
-                        region: 'south',
-                        autoEl: {
-                            src: 'https://www.google.com/search?igu=1&ei=&q=YOUR+WORD',
-                            tag: 'iframe'
-                        }
-                    }
+                    cmp
                 ],
                 renderTo: Ext.getBody()
             }
@@ -84,15 +77,25 @@ Ext.application({
     }
 });
 
+var cmp = Ext.create('Ext.Component', {
+    title: 'Google results',
+    region: 'south',
+    flex: 1.5,
+    width: '100%',
+    html: '<iframe src="https://www.google.com/search?igu=1&ei=&q=YOUR+WORD" style="height:100%;width:100%"></iframe>'
+});
+
 Ext.define('User', {
     extend: 'Ext.data.Model',
-
     fields: [{
+        name: 'surname',
+        type: 'string'
+    }, {
         name: 'name',
         type: 'string'
     }, {
-        name: 'price',
-        type: 'int'
+        name: 'patronymic',
+        type: 'string'
     }]
 });
 
@@ -101,7 +104,7 @@ var store = Ext.create('Ext.data.Store', {
     autoLoad: true,
     proxy: {
         type: 'ajax',
-        url: '/car',
+        url: '/user',
         reader: {
             type: 'json',
             root: 'users'

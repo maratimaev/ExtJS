@@ -1,31 +1,34 @@
 package ru.pet;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 public class HelloController {
+
+    @Autowired
+    private FileService fileService;
+
     @GetMapping("/")
-    public String hello(Model model) {
+    public String hello() {
         return "index";
     }
 
-    @GetMapping("/car")
+    @GetMapping("/user")
     @ResponseBody
-    public String getCar(Model model) {
-//        [{"id":1, "name":"a", "price":1},{"id":2, "name":"b", "price":2}]
-        String list = "[{\"id\":1, \"name\":\"a\", \"price\":1},{\"id\":2, \"name\":\"b\", \"price\":2}]";
-        String json = "{\"id\": 1, \"name\": \"aaa\", \"price\": 1}";
-        return list;
+    public List<Fio> getCar() {
+//        [{"name":"Иванов", "surname":"Иван", "patronymic":"Иванович"},{"name":"Петров", "surname":"Петр", "patronymic":"Петрович"}]
+        return fileService.getFioList();
     }
 
-    @GetMapping("/car/{name}")
+    @GetMapping("/user/{name}")
     @ResponseBody
-    public String getCarByName(@PathVariable String name, Model model) {
-        String list = "[{\"id\":1, \"name\":\"a\", \"price\":1}]";
-        return list;
+    public List<Fio> getCarByName(@PathVariable String name) {
+        return fileService.getFioListByName(name);
     }
 }
