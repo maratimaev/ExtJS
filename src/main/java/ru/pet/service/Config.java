@@ -1,4 +1,4 @@
-package ru.pet;
+package ru.pet.service;
 
 import org.springframework.stereotype.Component;
 

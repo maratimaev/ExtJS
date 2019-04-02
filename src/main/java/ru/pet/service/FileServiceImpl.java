@@ -1,7 +1,7 @@
-package ru.pet;
+package ru.pet.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.pet.view.Fio;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,10 +13,13 @@ import java.util.Scanner;
 @Service
 public class FileServiceImpl implements FileService {
 
-    @Autowired
-    private Config config;
+    private final Config config;
 
     private List<Fio> fioList = new ArrayList<>();
+
+    public FileServiceImpl(Config config) {
+        this.config = config;
+    }
 
     @Override
     public void init() {
@@ -47,5 +50,18 @@ public class FileServiceImpl implements FileService {
             }
         }
         return fios;
+    }
+
+    @Override
+    public List<Fio> getPagedList(List<Fio> list, int start, int limit) {
+        return list.subList(start, getLastPageSize(start, limit, list.size()));
+    }
+
+    private int getLastPageSize(int start, int limit, int size) {
+        int end =start + limit;
+        if (end > size) {
+            end = size;
+        }
+        return end;
     }
 }

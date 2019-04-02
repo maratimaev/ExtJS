@@ -1,4 +1,4 @@
-package ru.pet;
+package ru.pet.view;
 
 public class Fio {
 

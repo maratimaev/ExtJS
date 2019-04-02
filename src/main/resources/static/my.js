@@ -16,10 +16,10 @@ Ext.application({
                         store: store,
                         columns: [{
                             header: 'Фамилия',
-                            dataIndex: 'name'
+                            dataIndex: 'surname'
                         }, {
                             header: 'Имя',
-                            dataIndex: 'surname'
+                            dataIndex: 'name'
                         }, {
                             header: 'Отчество',
                             dataIndex: 'patronymic'
