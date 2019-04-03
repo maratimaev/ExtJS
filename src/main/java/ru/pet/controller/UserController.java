@@ -27,8 +27,8 @@ public class UserController {
 
     @GetMapping("/user")
     @ResponseBody
-    public Wrapper getCar(@RequestParam(value = "start", required = false) int start,
-                          @RequestParam(value = "limit", required = false) int limit) {
+    public Wrapper getCar(@RequestParam(value = "start") int start,
+                          @RequestParam(value = "limit") int limit) {
         List <Fio> list = fileService.getFioList();
         return new Wrapper(list.size(), fileService.getPagedList(list, start, limit));
     }
@@ -36,8 +36,8 @@ public class UserController {
     @GetMapping("/user/{name}")
     @ResponseBody
     public Wrapper getCarByName(@PathVariable String name,
-                                  @RequestParam(value = "start", required = false) int start,
-                                  @RequestParam(value = "limit", required = false) int limit) {
+                                @RequestParam(value = "start") int start,
+                                @RequestParam(value = "limit") int limit) {
         List <Fio> list = fileService.getFioListByName(name);
         return new Wrapper(list.size(), fileService.getPagedList(list, start, limit));
     }

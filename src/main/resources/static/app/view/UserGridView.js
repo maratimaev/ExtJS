@@ -14,7 +14,8 @@ Ext.define('jsp.view.UserGridView', {
     }, {
         header: 'Отчество',
         dataIndex: 'patronymic'
-    }],
+    }]
+    ,
     dockedItems: [{
         xtype: 'pagingtoolbar',
         store: 'UserStore',

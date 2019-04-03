@@ -1,6 +1,5 @@
 package ru.pet;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,11 +11,14 @@ import ru.pet.service.FileService;
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer implements CommandLineRunner {
 
-    @Autowired
-    private FileService fileService;
+    private final FileService fileService;
 
-    @Autowired
-    private Config config;
+    private final Config config;
+
+    public Application(FileService fileService, Config config) {
+        this.fileService = fileService;
+        this.config = config;
+    }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

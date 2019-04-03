@@ -1,6 +1,7 @@
 package ru.pet.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import ru.pet.view.Fio;
 
 import java.io.BufferedReader;
@@ -27,7 +28,8 @@ public class FileServiceImpl implements FileService {
         Scanner scanner;
         try (BufferedReader buffered = new BufferedReader(new FileReader(filename))) {
             scanner = new Scanner(buffered);
-            scanner.useDelimiter("(,)|(\r\n)");
+            String nl = System.getProperty("line.separator");
+            scanner.useDelimiter("(,)|(" + nl + ")");
             while (scanner.hasNextLine()) {
                 fioList.add(new Fio(scanner.next(), scanner.next(), scanner.next()));
             }
@@ -43,6 +45,9 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public List<Fio> getFioListByName(String name) {
+        if(StringUtils.isEmpty(name)) {
+            throw new RuntimeException(String.format("Searched username can't been empty %s", name));
+        }
         List<Fio> fios = new ArrayList<>();
         for (Fio fio : this.fioList) {
             if(fio.getName().contains(name)) {
@@ -54,14 +59,13 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public List<Fio> getPagedList(List<Fio> list, int start, int limit) {
-        return list.subList(start, getLastPageSize(start, limit, list.size()));
-    }
-
-    private int getLastPageSize(int start, int limit, int size) {
-        int end =start + limit;
-        if (end > size) {
-            end = size;
+        if(list == null) {
+            throw new RuntimeException(String.format("FIO list can't be null %s", list));
         }
-        return end;
+        int end =start + limit;
+        if (end > list.size()) {
+            end = list.size();
+        }
+        return list.subList(start, end);
     }
 }
