@@ -29,7 +29,7 @@ public class UserController {
     @ResponseBody
     public Wrapper getCar(@RequestParam(value = "start") int start,
                           @RequestParam(value = "limit") int limit) {
-        List <Fio> list = fileService.getFioList();
+        List<Fio> list = fileService.getFioList();
         return new Wrapper(list.size(), fileService.getPagedList(list, start, limit));
     }
 
@@ -38,7 +38,7 @@ public class UserController {
     public Wrapper getCarByName(@PathVariable String name,
                                 @RequestParam(value = "start") int start,
                                 @RequestParam(value = "limit") int limit) {
-        List <Fio> list = fileService.getFioListByName(name);
+        List<Fio> list = fileService.getFioListByName(name);
         return new Wrapper(list.size(), fileService.getPagedList(list, start, limit));
     }
 }
